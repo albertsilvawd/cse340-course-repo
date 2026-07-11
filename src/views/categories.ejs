@@ -1,16 +1,19 @@
 <%- include('partials/header') %>
 
-<main>
-    <h1><%= title %></h1>
+    <main>
+        <h1>
+            <%= title %>
+        </h1>
 
-    <p>Explore service opportunities by category and find the right fit for you.</p>
+        <p>Explore service opportunities by category and find the right fit for you.</p>
 
-    <div class="tag-grid">
-        <span class="tag">Environmental</span>
-        <span class="tag">Educational</span>
-        <span class="tag">Community Service</span>
-        <span class="tag">Health and Wellness</span>
-    </div>
-</main>
+        <div class="tag-grid">
+            <% categories.forEach(cat=> { %>
+                <span class="tag">
+                    <%= cat.name %>
+                </span>
+                <% }) %>
+        </div>
+    </main>
 
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
