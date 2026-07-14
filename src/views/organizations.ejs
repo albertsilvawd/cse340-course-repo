@@ -1,5 +1,4 @@
 <%- include('partials/header') %>
-
     <main>
         <h1>
             <%= title %>
@@ -8,21 +7,20 @@
         <p>Here are a few of our partner organizations:</p>
 
         <div class="card-grid">
-            <% organizations.forEach(org=> { %>
+            <% organizations.forEach(organization=> { %>
                 <div class="card">
-                    <img src="/images/<%= org.logo_filename %>" alt="<%= org.name %> logo">
-                    <strong>
-                        <%= org.name %>
-                    </strong>
+                    <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                    <strong><a href="/organization/<%= organization.organization_id %>">
+                            <%= organization.name %>
+                        </a></strong>
                     <p>
-                        <%= org.description %>
+                        <%= organization.description %>
                     </p>
                     <span>
-                        <%= org.contact_email %>
+                        <%= organization.contact_email %>
                     </span>
                 </div>
                 <% }) %>
         </div>
     </main>
-
     <%- include('partials/footer') %>
