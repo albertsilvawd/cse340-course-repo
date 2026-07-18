@@ -1,5 +1,4 @@
 <%- include('partials/header') %>
-
     <main>
         <h1>
             <%= title %>
@@ -9,11 +8,10 @@
 
         <div class="tag-grid">
             <% categories.forEach(cat=> { %>
-                <span class="tag">
+                <a href="/category/<%= cat.category_id %>" class="tag">
                     <%= cat.name %>
-                </span>
+                </a>
                 <% }) %>
         </div>
     </main>
-
     <%- include('partials/footer') %>
