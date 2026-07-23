@@ -2,7 +2,7 @@ import express from 'express';
 
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage, showOrganizationDetailsPage } from './controllers/organizations.js';
-import { showProjectsPage, showProjectDetailsPage } from './controllers/projects.js';
+import { showProjectsPage, showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
 import { showCategoriesPage, showCategoryDetailsPage } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
 
@@ -21,6 +21,10 @@ router.get('/project/:id', showProjectDetailsPage);
 
 // Route for category details page
 router.get('/category/:id', showCategoryDetailsPage);
+
+// Routes for editing a project
+router.get('/edit-project/:id', showEditProjectForm);
+router.post('/edit-project/:id', processEditProjectForm);
 
 // Error-handling routes
 router.get('/test-error', testErrorPage);

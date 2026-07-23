@@ -74,4 +74,26 @@ const getProjectDetails = async (id) => {
     return result.rows.length > 0 ? result.rows[0] : null;
 };
 
-export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails };
+/**
+ * Updates an existing project in the database.
+ */
+const updateProject = async (project_id, organization_id, title, description, location, date) => {
+    const query = `
+        UPDATE project
+        SET organization_id = $1,
+            title = $2,
+            description = $3,
+            location = $4,
+            date = $5
+        WHERE project_id = $6
+        RETURNING *;
+    `;
+    const queryParams = [organization_id, title, description, location, date, project_id];
+    const result = await db.query(query, queryParams);
+    if (result.rows.length === 0) {
+        throw new Error('Project not found or update failed.');
+    }
+    return result.rows[0];
+};
+
+export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, updateProject };

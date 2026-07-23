@@ -17,9 +17,11 @@
         <p><strong>Location:</strong>
             <%= project.location %>
         </p>
-        <p><strong>Organization:</strong> <a href="/organization/<%= project.organization_id %>">
+        <p><strong>Organization:</strong>
+            <a href="/organization/<%= project.organization_id %>">
                 <%= project.organization_name %>
-            </a></p>
+            </a>
+        </p>
 
         <h3>Categories</h3>
         <div class="tag-grid">
@@ -28,6 +30,10 @@
                     <%= cat.name %>
                 </a>
                 <% }) %>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="/edit-project/<%= project.project_id %>">✏️ Edit this project</a>
         </div>
     </main>
     <%- include('partials/footer') %>

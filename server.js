@@ -28,6 +28,12 @@ app.set('view engine', 'ejs');
 // Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'));
 
+// Middleware to parse form data
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware to parse JSON data
+app.use(express.json());
+
 // Middleware to log all incoming requests
 app.use((req, res, next) => {
     if (NODE_ENV === 'development') {
