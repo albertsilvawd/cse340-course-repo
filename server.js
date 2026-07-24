@@ -1,6 +1,8 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import session from 'express-session';
+import flash from 'connect-flash';
 import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
 
@@ -34,6 +36,17 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware to parse JSON data
 app.use(express.json());
 
+// Session middleware (required for flash messages)
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'cse340-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
+
+// Flash messages middleware
+app.use(flash());
+
 // Middleware to log all incoming requests
 app.use((req, res, next) => {
     if (NODE_ENV === 'development') {
@@ -42,9 +55,10 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware to make NODE_ENV available to all templates
+// Middleware to make NODE_ENV and flash messages available to all templates
 app.use((req, res, next) => {
     res.locals.NODE_ENV = NODE_ENV;
+    res.locals.messages = req.flash();
     next();
 });
 

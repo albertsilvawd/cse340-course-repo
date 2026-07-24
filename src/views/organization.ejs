@@ -9,18 +9,27 @@
         </h2>
         <img src="/images/<%= organizationDetails.logo_filename %>" alt="<%= organizationDetails.name %> logo">
 
-        <p>Description: <%= organizationDetails.description %>
+        <p><strong>Description:</strong>
+            <%= organizationDetails.description %>
         </p>
-        <p>Contact: <%= organizationDetails.contact_email %>
+        <p><strong>Contact:</strong>
+            <%= organizationDetails.contact_email %>
         </p>
 
         <h3>Service Projects</h3>
         <ul class="styled-list">
             <% projects.forEach(project=> { %>
-                <li><a href="/project/<%= project.project_id %>">
+                <li>
+                    <a href="/project/<%= project.project_id %>">
                         <%= project.title %>
-                    </a></li>
+                    </a>
+                </li>
                 <% }) %>
         </ul>
+
+        <div style="margin-top: 20px;">
+            <a href="/edit-organization/<%= organizationDetails.organization_id %>" class="btn-primary">✏️ Edit
+                Organization</a>
+        </div>
     </main>
     <%- include('partials/footer') %>

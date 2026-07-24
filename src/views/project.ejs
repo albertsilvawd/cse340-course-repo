@@ -32,8 +32,9 @@
                 <% }) %>
         </div>
 
-        <div style="margin-top: 20px;">
-            <a href="/edit-project/<%= project.project_id %>">✏️ Edit this project</a>
+        <div style="margin-top: 20px; display:flex; gap:10px;">
+            <a href="/edit-project/<%= project.project_id %>" class="btn-primary">✏️ Edit Project</a>
+            <a href="/assign-categories/<%= project.project_id %>" class="btn-secondary">🏷️ Assign Categories</a>
         </div>
     </main>
     <%- include('partials/footer') %>

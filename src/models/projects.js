@@ -15,6 +15,9 @@ const getAllProjects = async () => {
     return result.rows;
 };
 
+/**
+ * Retrieves all projects for a given organization.
+ */
 const getProjectsByOrganizationId = async (organizationId) => {
     const query = `
         SELECT
@@ -33,7 +36,9 @@ const getProjectsByOrganizationId = async (organizationId) => {
     return result.rows;
 };
 
-
+/**
+ * Retrieves upcoming projects with a limit.
+ */
 const getUpcomingProjects = async (number_of_projects) => {
     const query = `
         SELECT
@@ -55,6 +60,9 @@ const getUpcomingProjects = async (number_of_projects) => {
     return result.rows;
 };
 
+/**
+ * Retrieves a single project by its ID.
+ */
 const getProjectDetails = async (id) => {
     const query = `
         SELECT
@@ -72,6 +80,20 @@ const getProjectDetails = async (id) => {
     const queryParams = [id];
     const result = await db.query(query, queryParams);
     return result.rows.length > 0 ? result.rows[0] : null;
+};
+
+/**
+ * Inserts a new project into the database.
+ */
+const addProject = async (organization_id, title, description, location, date) => {
+    const query = `
+        INSERT INTO project (organization_id, title, description, location, date)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING project_id;
+    `;
+    const queryParams = [organization_id, title, description, location, date];
+    const result = await db.query(query, queryParams);
+    return result.rows[0];
 };
 
 /**
@@ -96,4 +118,5 @@ const updateProject = async (project_id, organization_id, title, description, lo
     return result.rows[0];
 };
 
-export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, updateProject };
+// Export model functions
+export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, addProject, updateProject };
