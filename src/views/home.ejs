@@ -1,5 +1,4 @@
 <%- include('partials/header') %>
-
     <main>
         <h1>
             <%= title %>
@@ -12,6 +11,11 @@
         </div>
 
         <img class="main-logo" src="/images/cse340-service-network.svg" alt="CSE 340 Service Network Logo">
-    </main>
 
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-top: 20px;">
+                <a href="/users" class="btn-primary">👥 View Registered Users</a>
+            </div>
+            <% } %>
+    </main>
     <%- include('partials/footer') %>

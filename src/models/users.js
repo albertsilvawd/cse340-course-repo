@@ -40,5 +40,19 @@ const verifyPassword = async (password, password_hash) => {
     return await bcrypt.compare(password, password_hash);
 };
 
+/**
+ * Retrieves all registered users with their role names.
+ */
+const getAllUsers = async () => {
+    const query = `
+        SELECT u.user_id, u.name, u.email, r.role_name, u.created_at
+        FROM users u
+        JOIN roles r ON u.role_id = r.role_id
+        ORDER BY u.created_at DESC;
+    `;
+    const result = await db.query(query);
+    return result.rows;
+};
+
 // Export model functions
-export { registerUser, findUserByEmail, verifyPassword };
+export { registerUser, findUserByEmail, verifyPassword, getAllUsers };

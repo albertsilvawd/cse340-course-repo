@@ -1,4 +1,4 @@
-import { registerUser, findUserByEmail, verifyPassword } from '../models/users.js';
+import { registerUser, findUserByEmail, verifyPassword, getAllUsers } from '../models/users.js';
 import { body, validationResult } from 'express-validator';
 
 // Define controller functions
@@ -150,6 +150,13 @@ const requireRole = (role) => {
     };
 };
 
+// Shows the users list page (admin only)
+const showUsersPage = async (req, res) => {
+    const users = await getAllUsers();
+    const title = 'Registered Users';
+    res.render('users', { title, users });
+};
+
 // Export controller functions
 export {
     showRegisterForm,
@@ -160,5 +167,6 @@ export {
     processLoginForm,
     logout,
     requireLogin,
-    requireRole
+    requireRole,
+    showUsersPage
 };

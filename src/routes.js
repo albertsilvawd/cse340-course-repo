@@ -38,7 +38,9 @@ import {
     loginValidationRules,
     processLoginForm,
     logout,
-    requireRole
+    requireLogin,
+    requireRole,
+    showUsersPage
 } from './controllers/users.js';
 import { testErrorPage } from './controllers/errors.js';
 
@@ -56,6 +58,9 @@ router.post('/register', registerValidationRules, processRegisterForm);
 router.get('/login', showLoginForm);
 router.post('/login', loginValidationRules, processLoginForm);
 router.get('/logout', logout);
+
+// Admin only — users list
+router.get('/users', requireRole('admin'), showUsersPage);
 
 // Admin only routes — organizations (MUST come before /:id)
 router.get('/organization/add', requireRole('admin'), showAddOrganizationForm);
