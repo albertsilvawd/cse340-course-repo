@@ -4,27 +4,29 @@
             <%= title %>
         </h1>
 
-        <div style="margin-bottom: 16px;">
-            <a href="/organization/add" class="btn-primary">+ Add Organization</a>
-        </div>
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-bottom: 16px;">
+                <a href="/organization/add" class="btn-primary">+ Add Organization</a>
+            </div>
+            <% } %>
 
-        <p>Here are a few of our partner organizations:</p>
+                <p>Here are a few of our partner organizations:</p>
 
-        <div class="card-grid">
-            <% organizations.forEach(organization=> { %>
-                <div class="card">
-                    <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
-                    <strong><a href="/organization/<%= organization.organization_id %>">
-                            <%= organization.name %>
-                        </a></strong>
-                    <p>
-                        <%= organization.description %>
-                    </p>
-                    <span>
-                        <%= organization.contact_email %>
-                    </span>
+                <div class="card-grid">
+                    <% organizations.forEach(organization=> { %>
+                        <div class="card">
+                            <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                            <strong><a href="/organization/<%= organization.organization_id %>">
+                                    <%= organization.name %>
+                                </a></strong>
+                            <p>
+                                <%= organization.description %>
+                            </p>
+                            <span>
+                                <%= organization.contact_email %>
+                            </span>
+                        </div>
+                        <% }) %>
                 </div>
-                <% }) %>
-        </div>
     </main>
     <%- include('partials/footer') %>

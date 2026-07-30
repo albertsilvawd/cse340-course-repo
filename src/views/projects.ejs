@@ -4,23 +4,25 @@
             <%= title %>
         </h1>
 
-        <div style="margin-bottom: 16px;">
-            <a href="/project/add" class="btn-primary">+ Add Project</a>
-        </div>
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-bottom: 16px;">
+                <a href="/project/add" class="btn-primary">+ Add Project</a>
+            </div>
+            <% } %>
 
-        <p>Here are the next upcoming service projects. Click on a project to learn more.</p>
+                <p>Here are the next upcoming service projects. Click on a project to learn more.</p>
 
-        <ul class="styled-list">
-            <% projects.forEach(project=> { %>
-                <li>
-                    <a href="/project/<%= project.project_id %>">
-                        <%= project.title %>
-                    </a>
-                    — <a href="/organization/<%= project.organization_id %>">
-                        <%= project.organization_name %>
-                    </a>
-                </li>
-                <% }) %>
-        </ul>
+                <ul class="styled-list">
+                    <% projects.forEach(project=> { %>
+                        <li>
+                            <a href="/project/<%= project.project_id %>">
+                                <%= project.title %>
+                            </a>
+                            — <a href="/organization/<%= project.organization_id %>">
+                                <%= project.organization_name %>
+                            </a>
+                        </li>
+                        <% }) %>
+                </ul>
     </main>
     <%- include('partials/footer') %>

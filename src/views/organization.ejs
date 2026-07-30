@@ -27,9 +27,11 @@
                 <% }) %>
         </ul>
 
-        <div style="margin-top: 20px;">
-            <a href="/edit-organization/<%= organizationDetails.organization_id %>" class="btn-primary">✏️ Edit
-                Organization</a>
-        </div>
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-top: 20px;">
+                <a href="/edit-organization/<%= organizationDetails.organization_id %>" class="btn-primary">✏️ Edit
+                    Organization</a>
+            </div>
+            <% } %>
     </main>
     <%- include('partials/footer') %>

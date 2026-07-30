@@ -30,47 +30,69 @@ import {
     showAssignCategoriesForm,
     processAssignCategoriesForm
 } from './controllers/categories.js';
+import {
+    showRegisterForm,
+    registerValidationRules,
+    processRegisterForm,
+    showLoginForm,
+    loginValidationRules,
+    processLoginForm,
+    logout,
+    requireRole
+} from './controllers/users.js';
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
 
+// Public routes
 router.get('/', showHomePage);
 router.get('/organizations', showOrganizationsPage);
 router.get('/projects', showProjectsPage);
 router.get('/categories', showCategoriesPage);
 
-// Routes for adding an organization (MUST come before /:id)
-router.get('/organization/add', showAddOrganizationForm);
-router.post('/organization/add', organizationValidationRules, processAddOrganizationForm);
+// Auth routes
+router.get('/register', showRegisterForm);
+router.post('/register', registerValidationRules, processRegisterForm);
+router.get('/login', showLoginForm);
+router.post('/login', loginValidationRules, processLoginForm);
+router.get('/logout', logout);
 
-// Routes for organization details and editing
+// Admin only routes — organizations (MUST come before /:id)
+router.get('/organization/add', requireRole('admin'), showAddOrganizationForm);
+router.post('/organization/add', requireRole('admin'), organizationValidationRules, processAddOrganizationForm);
+
+// Organization detail (public)
 router.get('/organization/:id', showOrganizationDetailsPage);
-router.get('/edit-organization/:id', showEditOrganizationForm);
-router.post('/edit-organization/:id', organizationValidationRules, processEditOrganizationForm);
 
-// Routes for adding a project (MUST come before /:id)
-router.get('/project/add', showAddProjectForm);
-router.post('/project/add', projectValidationRules, processAddProjectForm);
+// Edit organization (admin only)
+router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
+router.post('/edit-organization/:id', requireRole('admin'), organizationValidationRules, processEditOrganizationForm);
 
-// Route for project details page
+// Admin only routes — projects (MUST come before /:id)
+router.get('/project/add', requireRole('admin'), showAddProjectForm);
+router.post('/project/add', requireRole('admin'), projectValidationRules, processAddProjectForm);
+
+// Project detail (public)
 router.get('/project/:id', showProjectDetailsPage);
 
-// Routes for editing a project
-router.get('/edit-project/:id', showEditProjectForm);
-router.post('/edit-project/:id', projectValidationRules, processEditProjectForm);
+// Edit project (admin only)
+router.get('/edit-project/:id', requireRole('admin'), showEditProjectForm);
+router.post('/edit-project/:id', requireRole('admin'), projectValidationRules, processEditProjectForm);
 
-// Routes for adding a category (MUST come before /:id)
-router.get('/category/add', showAddCategoryForm);
-router.post('/category/add', categoryValidationRules, processAddCategoryForm);
+// Admin only routes — categories (MUST come before /:id)
+router.get('/category/add', requireRole('admin'), showAddCategoryForm);
+router.post('/category/add', requireRole('admin'), categoryValidationRules, processAddCategoryForm);
 
-// Routes for category details and editing
+// Category detail (public)
 router.get('/category/:id', showCategoryDetailsPage);
-router.get('/edit-category/:id', showEditCategoryForm);
-router.post('/edit-category/:id', categoryValidationRules, processEditCategoryForm);
 
-// Routes for assigning categories to a project
-router.get('/assign-categories/:id', showAssignCategoriesForm);
-router.post('/assign-categories/:id', processAssignCategoriesForm);
+// Edit category (admin only)
+router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
+router.post('/edit-category/:id', requireRole('admin'), categoryValidationRules, processEditCategoryForm);
+
+// Assign categories (admin only)
+router.get('/assign-categories/:id', requireRole('admin'), showAssignCategoriesForm);
+router.post('/assign-categories/:id', requireRole('admin'), processAssignCategoriesForm);
 
 // Error-handling routes
 router.get('/test-error', testErrorPage);

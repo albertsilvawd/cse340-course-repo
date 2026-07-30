@@ -4,18 +4,20 @@
             <%= title %>
         </h1>
 
-        <div style="margin-bottom: 16px;">
-            <a href="/category/add" class="btn-primary">+ Add Category</a>
-        </div>
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-bottom: 16px;">
+                <a href="/category/add" class="btn-primary">+ Add Category</a>
+            </div>
+            <% } %>
 
-        <p>Explore service opportunities by category and find the right fit for you.</p>
+                <p>Explore service opportunities by category and find the right fit for you.</p>
 
-        <div class="tag-grid">
-            <% categories.forEach(cat=> { %>
-                <a href="/category/<%= cat.category_id %>" class="tag">
-                    <%= cat.name %>
-                </a>
-                <% }) %>
-        </div>
+                <div class="tag-grid">
+                    <% categories.forEach(cat=> { %>
+                        <a href="/category/<%= cat.category_id %>" class="tag">
+                            <%= cat.name %>
+                        </a>
+                        <% }) %>
+                </div>
     </main>
     <%- include('partials/footer') %>
