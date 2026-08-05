@@ -42,6 +42,12 @@ import {
     requireRole,
     showUsersPage
 } from './controllers/users.js';
+import {
+    processAddVolunteer,
+    processRemoveVolunteer,
+    processRemoveVolunteerFromDashboard,
+    showDashboard
+} from './controllers/volunteers.js';
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -58,6 +64,9 @@ router.post('/register', registerValidationRules, processRegisterForm);
 router.get('/login', showLoginForm);
 router.post('/login', loginValidationRules, processLoginForm);
 router.get('/logout', logout);
+
+// Dashboard (requires login)
+router.get('/dashboard', requireLogin, showDashboard);
 
 // Admin only — users list
 router.get('/users', requireRole('admin'), showUsersPage);
@@ -98,6 +107,11 @@ router.post('/edit-category/:id', requireRole('admin'), categoryValidationRules,
 // Assign categories (admin only)
 router.get('/assign-categories/:id', requireRole('admin'), showAssignCategoriesForm);
 router.post('/assign-categories/:id', requireRole('admin'), processAssignCategoriesForm);
+
+// Volunteer routes (requires login)
+router.get('/volunteer/add/:id', requireLogin, processAddVolunteer);
+router.get('/volunteer/remove/:id', requireLogin, processRemoveVolunteer);
+router.get('/volunteer/remove-from-dashboard/:id', requireLogin, processRemoveVolunteerFromDashboard);
 
 // Error-handling routes
 router.get('/test-error', testErrorPage);

@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+    <main>
+        <h1>
+            <%= title %>
+        </h1>
+
+        <p>Welcome, <strong>
+                <%= user.name %>
+            </strong>! Here are the projects you have signed up to volunteer for.</p>
+
+        <% if (user && user.role_name==='admin' ) { %>
+            <div style="margin-bottom: 16px;">
+                <a href="/users" class="btn-primary">👥 View Registered Users</a>
+            </div>
+            <% } %>
+
+                <h2>My Volunteer Projects</h2>
+
+                <% if (projects.length===0) { %>
+                    <p>You have not signed up to volunteer for any projects yet.
+                        <a href="/projects">Browse projects</a> to find one you are interested in!
+                    </p>
+                    <% } else { %>
+                        <ul class="styled-list">
+                            <% projects.forEach(project=> { %>
+                                <li style="display:flex; justify-content:space-between; align-items:center;">
+                                    <div>
+                                        <a href="/project/<%= project.project_id %>">
+                                            <%= project.title %>
+                                        </a>
+                                        — <a href="/organization/<%= project.organization_id %>">
+                                            <%= project.organization_name %>
+                                        </a>
+                                        <span
+                                            style="color:var(--color-text-muted); font-size:0.875rem; margin-left:8px;">
+                                            <%= new Date(project.date).toLocaleDateString('en-US', { year: 'numeric' ,
+                                                month: 'long' , day: 'numeric' }) %>
+                                        </span>
+                                    </div>
+                                    <a href="/volunteer/remove-from-dashboard/<%= project.project_id %>"
+                                        class="btn-secondary" style="font-size:0.875rem; padding:6px 12px;"
+                                        onclick="return confirm('Remove yourself as a volunteer for this project?')">
+                                        ✕ Remove
+                                    </a>
+                                </li>
+                                <% }) %>
+                        </ul>
+                        <% } %>
+    </main>
+    <%- include('partials/footer') %>
